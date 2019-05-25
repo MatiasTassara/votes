@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class Person {
+public class Votant {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
@@ -18,11 +18,11 @@ public class Person {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Vote> votes;
 
-    public Person(){
+    public Votant(){
 
     }
 
-    public Person(String  dni, List<Vote> votes) {
+    public Votant(String  dni, List<Vote> votes) {
         this.dni = dni;
         this.votes = votes;
     }

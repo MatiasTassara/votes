@@ -1,10 +1,10 @@
 package com.example.SimulacroParcial.controller;
 
 import com.example.SimulacroParcial.model.Candidate;
-import com.example.SimulacroParcial.model.Person;
+import com.example.SimulacroParcial.model.Votant;
 import com.example.SimulacroParcial.model.Vote;
 import com.example.SimulacroParcial.service.CandidateRepository;
-import com.example.SimulacroParcial.service.PersonRepository;
+import com.example.SimulacroParcial.service.VotantRepository;
 import com.example.SimulacroParcial.service.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,40 +18,38 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/Person")
-public class PersonController {
+public class VotantController {
 
     @Autowired
-    private PersonRepository personRepository;
+    private VotantRepository votantRepository;
     @Autowired
     private CandidateRepository candidateRepository;
     @Autowired
     private VoteRepository voteRepository;
 
-    public PersonController(){
+    public VotantController(){
 
     }
 
     @PostMapping("")
-    public void add(@RequestBody Person p){
-        personRepository.save(p);
+    public void add(@RequestBody Votant p){
+        votantRepository.save(p);
     }
 
     @GetMapping("")
-    public List<Person> getAll(){
-        return personRepository.findAll();
+    public List<Votant> getAll(){
+        return votantRepository.findAll();
     }
 
 
-    //si llega a dar error ver si id es string o integer
     @GetMapping("/{id}")
-    public Person get(@PathVariable ("id") Integer id){
-         Person per = personRepository.findById(id)
+    public Votant get(@PathVariable ("id") Integer id){
+         Votant per = votantRepository.findById(id)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Persona no encontrada"));
          return per;
     }
@@ -59,7 +57,7 @@ public class PersonController {
     @PostMapping("/{idP}/vote/{idC}")
     public void vote(@PathVariable("idP") Integer idPerson,@PathVariable("idC") Integer idCandidate){
 
-        Person per = personRepository.findById(idPerson)
+        Votant per = votantRepository.findById(idPerson)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Persona no encontrada"));
         Candidate can = candidateRepository.findById(idCandidate)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Candidato no encontrado"));
@@ -70,7 +68,7 @@ public class PersonController {
             can.addVote(vt);
             voteRepository.save(vt);
         }
-        personRepository.save(per);
+        votantRepository.save(per);
         candidateRepository.save(can);
 
     }

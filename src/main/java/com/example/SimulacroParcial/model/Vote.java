@@ -22,17 +22,17 @@ public class Vote {
     @JsonIgnore
     private Candidate candidate;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    @JoinColumn(name = "votant_id", referencedColumnName = "id")
     @JsonIgnore
-    private Person person;
+    private Votant votant;
 
     public Vote(){
 
     }
-    public Vote(LocalDateTime localDateTime, Candidate candidate,Person person) {
+    public Vote(LocalDateTime localDateTime, Candidate candidate, Votant votant) {
         this.date = localDateTime;
         this.candidate = candidate;
-        this.person = person;
+        this.votant = votant;
 
     }
 
@@ -60,16 +60,16 @@ public class Vote {
         this.candidate = candidate;
     }
 
-    public Person getPerson() {
-        return person;
+    public Votant getVotant() {
+        return votant;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setVotant(Votant votant) {
+        this.votant = votant;
     }
 
     @Override
     public String toString() {
-        return "Id de Voto: " + getId() + "\nid persona: " + getPerson().getId() + "\nid candidato: " + getCandidate().getId();
+        return "Id de Voto: " + getId() + "\nid votante: " + getVotant().getId() + "\nid candidato: " + getCandidate().getId();
     }
 }
