@@ -15,7 +15,7 @@ public class Votant {
     private Integer id;
 
     private String dni;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "votant")
     private List<Vote> votes;
 
     public Votant(){
