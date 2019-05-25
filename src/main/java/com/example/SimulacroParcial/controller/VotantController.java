@@ -56,8 +56,8 @@ public class VotantController {
     }
     @PutMapping("/{id}")
     public void modify(@RequestBody Votant v, @PathVariable("id") Integer id){
-        votantRepository.save(votantRepository.findById(id)
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST,"Can't access votant")));
+        v.setId(id);
+        votantRepository.save(v);
     }
     @PostMapping("/{idP}/vote/{idC}")
     public void vote(@PathVariable("idP") Integer idPerson,@PathVariable("idC") Integer idCandidate){
