@@ -37,9 +37,10 @@ public class CandidateController {
     public List<Candidate> getAll(){
         return candidateRepository.findAll();
     }
-    @PutMapping("")
-    public void modify(@RequestBody Candidate c){
-        candidateRepository.save(c);
+    @PutMapping("/{id}")
+    public void modify(@RequestBody Candidate c, @PathVariable("id") Integer id){
+        candidateRepository.save(candidateRepository.findById(id)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST,"Can't access candidate")));
     }
 
     @GetMapping("/{id}")

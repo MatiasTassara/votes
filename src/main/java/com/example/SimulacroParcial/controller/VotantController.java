@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +54,11 @@ public class VotantController {
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Persona no encontrada"));
          return per;
     }
-
+    @PutMapping("/{id}")
+    public void modify(@RequestBody Votant v, @PathVariable("id") Integer id){
+        votantRepository.save(votantRepository.findById(id)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST,"Can't access votant")));
+    }
     @PostMapping("/{idP}/vote/{idC}")
     public void vote(@PathVariable("idP") Integer idPerson,@PathVariable("idC") Integer idCandidate){
 
